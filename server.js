@@ -10,21 +10,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// serve widget files
+app.use(express.static("widget"));
+
 const upload = multer({ dest: "uploads/" });
-
-/* ---------- Root Route ---------- */
-
-app.get("/", (req, res) => {
-  res.send("Ticket Widget API is running 🚀");
-});
-
-/* ---------- Health Check ---------- */
-
-app.get("/health", (req, res) => {
-  res.json({ status: "running" });
-});
-
-/* ---------- Create Ticket API ---------- */
 
 app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
@@ -41,6 +30,7 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
     } = req.body;
 
     const payload = {
+
       type: "email",
 
       mailboxId: Number(process.env.MAILBOX_ID),
@@ -64,6 +54,7 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
         { name: "course", value: course },
         { name: "file_link", value: fileLink }
       ]
+
     };
 
     const response = await axios.post(
@@ -77,27 +68,16 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
       }
     );
 
-    console.log("Ticket created:", response.data);
-
-    return res.status(200).json({
+    res.json({
       success: true,
-      conversationId: response.data.id || "created"
+      conversationId: response.data.id
     });
 
   } catch (error) {
 
-    console.log("==== FREESCOUT ERROR ====");
+    console.log(error.response?.data || error.message);
 
-    if (error.response) {
-      console.log("Status:", error.response.status);
-      console.log(JSON.stringify(error.response.data, null, 2));
-    } else {
-      console.log(error.message);
-    }
-
-    console.log("=========================");
-
-    return res.status(200).json({
+    res.json({
       success: true,
       message: "Ticket created but API returned warning"
     });
@@ -105,8 +85,6 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
   }
 
 });
-
-/* ---------- Server ---------- */
 
 const PORT = process.env.PORT || 3000;
 

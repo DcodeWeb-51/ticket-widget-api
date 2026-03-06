@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Support Ticket</title>
-<style>
-body{
-font-family: Arial;
-margin:40px;
-}
 
-input,select,textarea,button{
-display:block;
-margin-bottom:15px;
-padding:8px;
-width:300px;
-}
+<title>Support Widget</title>
+<link rel="stylesheet" href="widget.css">
 
-button{
-cursor:pointer;
-}
-</style>
 </head>
 
 <body>
 
-<h2>Support Ticket</h2>
+<h1 class="pageTitle">Support Portal</h1>
+<p class="pageDesc">If you need help, click the support button.</p>
+
+<!-- Floating Button -->
+<button id="openWidget">💬 Support</button>
+
+<!-- Widget Box -->
+<div id="widgetBox">
+
+<div class="widgetHeader">
+<span>Support Ticket</span>
+<button id="closeWidget">✕</button>
+</div>
 
 <form id="ticketForm">
 
 <input name="your-name" placeholder="Full Name" required>
 
-<input name="your-email" type="email" placeholder="Email" required>
+<input name="your-email" placeholder="Email" required>
 
 <select name="issue-type">
 <option value="Registration">Registration</option>
@@ -37,68 +35,21 @@ cursor:pointer;
 <option value="Course Related">Course Related</option>
 </select>
 
-<select name="course">
-<option value="Brahmavidya Adhyayan">Brahmavidya Adhyayan</option>
-<option value="Bhagavad Gita">Bhagavad Gita</option>
-><option value="Satsang-Diksha Adhyayan">Satsang-Diksha Adhyayan</option>
-</select>
-
 <input name="your-subject" placeholder="Subject">
 
-<textarea name="your-message" placeholder="Message"></textarea>
+<textarea name="your-message" placeholder="Describe your issue"></textarea>
 
-<input type="file" name="multiple-files">
-
-<input name="file-link" placeholder="Drive link">
-
-<button type="submit">Submit Ticket</button>
+<button type="submit" id="submitBtn">Submit Ticket</button>
 
 </form>
 
-<script>
+<div id="successMessage" style="display:none;">
+✅ Ticket submitted successfully!
+</div>
 
-const form = document.getElementById("ticketForm");
+</div>
 
-form.addEventListener("submit", async (e) => {
-
-e.preventDefault();
-
-const formData = new FormData(form);
-
-try {
-
-const res = await fetch("https://ticket-widget-api.onrender.com/api/ticket", {
-method: "POST",
-body: formData
-});
-
-const data = await res.json();
-
-console.log("API RESPONSE:", data);
-
-if(data.success){
-
-alert("Ticket created successfully! Ticket ID: " + (data.conversationId || "Created"));
-
-form.reset();
-
-}else{
-
-alert("Ticket creation failed");
-
-}
-
-} catch(err){
-
-console.error("Request failed:", err);
-
-alert("Server connection error");
-
-}
-
-});
-
-</script>
+<script src="widget.js"></script>
 
 </body>
 </html>
