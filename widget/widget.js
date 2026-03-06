@@ -1,6 +1,7 @@
 const openBtn = document.getElementById("openWidget");
 const closeBtn = document.getElementById("closeWidget");
 const widget = document.getElementById("widgetBox");
+
 const form = document.getElementById("ticketForm");
 const success = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
@@ -17,8 +18,8 @@ form.addEventListener("submit", async (e)=>{
 
 e.preventDefault();
 
-submitBtn.innerText = "Sending...";
-submitBtn.disabled = true;
+submitBtn.innerText="Sending...";
+submitBtn.disabled=true;
 
 const formData = new FormData(form);
 
@@ -33,7 +34,10 @@ const data = await res.json();
 
 if(data.success){
 
+form.reset();
+
 form.style.display="none";
+
 success.style.display="block";
 
 }
