@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Support Ticket</title>
+<style>
+body{
+font-family: Arial;
+margin:40px;
+}
+
+input,select,textarea,button{
+display:block;
+margin-bottom:15px;
+padding:8px;
+width:300px;
+}
+
+button{
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Support Ticket</h2>
+
+<form id="ticketForm">
+
+<input name="your-name" placeholder="Full Name" required>
+
+<input name="your-email" type="email" placeholder="Email" required>
+
+<select name="issue-type">
+<option value="Registration">Registration</option>
+<option value="Payment">Payment</option>
+<option value="Course Related">Course Related</option>
+</select>
+
+<select name="course">
+<option value="Brahmavidya Adhyayan">Brahmavidya Adhyayan</option>
+<option value="Bhagavad Gita">Bhagavad Gita</option>
+><option value="Satsang-Diksha Adhyayan">Satsang-Diksha Adhyayan</option>
+</select>
+
+<input name="your-subject" placeholder="Subject">
+
+<textarea name="your-message" placeholder="Message"></textarea>
+
+<input type="file" name="multiple-files">
+
+<input name="file-link" placeholder="Drive link">
+
+<button type="submit">Submit Ticket</button>
+
+</form>
+
+<script>
+
+const form = document.getElementById("ticketForm");
+
+form.addEventListener("submit", async (e) => {
+
+e.preventDefault();
+
+const formData = new FormData(form);
+
+try {
+
+const res = await fetch("http://localhost:3000/api/ticket", {
+method: "POST",
+body: formData
+});
+
+const data = await res.json();
+
+console.log("API RESPONSE:", data);
+
+if(data.success){
+
+alert("Ticket created successfully! Ticket ID: " + (data.conversationId || "Created"));
+
+form.reset();
+
+}else{
+
+alert("Ticket creation failed");
+
+}
+
+} catch(err){
+
+console.error("Request failed:", err);
+
+alert("Server connection error");
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
