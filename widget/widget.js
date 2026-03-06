@@ -1,21 +1,28 @@
-const button = document.getElementById("openWidget");
-const box = document.getElementById("widgetBox");
+const openBtn = document.getElementById("openWidget");
+const closeBtn = document.getElementById("closeWidget");
+const widget = document.getElementById("widgetBox");
+const form = document.getElementById("ticketForm");
+const success = document.getElementById("successMessage");
+const submitBtn = document.getElementById("submitBtn");
 
-button.onclick = () => {
-
-if(box.style.display === "block"){
-box.style.display = "none";
-}else{
-box.style.display = "block";
-}
-
+openBtn.onclick = () => {
+widget.style.display = "block";
 };
 
-document.getElementById("ticketForm").addEventListener("submit", async (e)=>{
+closeBtn.onclick = () => {
+widget.style.display = "none";
+};
+
+form.addEventListener("submit", async (e)=>{
 
 e.preventDefault();
 
-const formData = new FormData(e.target);
+submitBtn.innerText = "Sending...";
+submitBtn.disabled = true;
+
+const formData = new FormData(form);
+
+try{
 
 const res = await fetch("/api/ticket",{
 method:"POST",
@@ -26,12 +33,18 @@ const data = await res.json();
 
 if(data.success){
 
-alert("Ticket created!");
-
-}else{
-
-alert("Error creating ticket");
+form.style.display="none";
+success.style.display="block";
 
 }
+
+}catch(err){
+
+alert("Server error");
+
+}
+
+submitBtn.innerText="Submit Ticket";
+submitBtn.disabled=false;
 
 });
