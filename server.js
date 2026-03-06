@@ -10,10 +10,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// serve widget files
+/* Serve widget files */
 app.use(express.static("widget"));
 
 const upload = multer({ dest: "uploads/" });
+
+/* Create ticket API */
 
 app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
