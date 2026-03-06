@@ -10,12 +10,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* Serve widget files */
+/* serve widget files */
 app.use(express.static("widget"));
 
 const upload = multer({ dest: "uploads/" });
-
-/* Create ticket API */
 
 app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
@@ -32,7 +30,6 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
     } = req.body;
 
     const payload = {
-
       type: "email",
 
       mailboxId: Number(process.env.MAILBOX_ID),
@@ -56,7 +53,6 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
         { name: "course", value: course },
         { name: "file_link", value: fileLink }
       ]
-
     };
 
     const response = await axios.post(
