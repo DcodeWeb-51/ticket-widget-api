@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Support Widget</title>
+<title>Support Portal</title>
 <link rel="stylesheet" href="widget.css">
 
 </head>
@@ -10,12 +10,12 @@
 <body>
 
 <h1 class="pageTitle">Support Portal</h1>
-<p class="pageDesc">If you need help, click the support button in the corner.</p>
+<p class="pageDesc">
+Need help? Click the Support button in the bottom-right corner.
+</p>
 
-<!-- Floating Button -->
-<button id="openWidget">💬 Support widgets</button>
+<button id="openWidget">💬 Support</button>
 
-<!-- Widget Box -->
 <div id="widgetBox">
 
 <div class="widgetHeader">
@@ -27,23 +27,36 @@
 
 <input name="your-name" placeholder="Full Name" required>
 
-<input name="your-email" placeholder="Email" required>
+<input name="your-email" type="email" placeholder="Email" required>
 
-<select name="issue-type">
+<select name="issue-type" required>
+<option value="">Issue Type</option>
 <option value="Registration">Registration</option>
 <option value="Payment">Payment</option>
 <option value="Course Related">Course Related</option>
+<option value="Feedback">Feedback</option>
+<option value="Other">Other</option>
+</select>
+
+<select name="course" required>
+<option value="">Select Course</option>
+<option value="Brahmavidya Adhyayan">Brahmavidya Adhyayan</option>
+<option value="Diploma in Sanskrit Learning and Teaching">Diploma in Sanskrit Learning and Teaching</option>
+<option value="Diploma in the Srimad Bhagavad Gita">Diploma in the Srimad Bhagavad Gita</option>
+<option value="Satsang-Diksha Adhyayan">Satsang-Diksha Adhyayan</option>
 </select>
 
 <input name="your-subject" placeholder="Subject">
 
 <textarea name="your-message" placeholder="Describe your issue"></textarea>
 
+<input name="file-link" placeholder="Google Drive / Dropbox Link (optional)">
+
 <button type="submit" id="submitBtn">Submit Ticket</button>
 
 </form>
 
-<div id="successMessage" style="display:none;">
+<div id="successMessage">
 ✅ Ticket submitted successfully!
 </div>
 
