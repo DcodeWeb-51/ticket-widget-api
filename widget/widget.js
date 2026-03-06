@@ -7,11 +7,18 @@ const success = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
 
 openBtn.onclick = () => {
+
+success.style.display = "none";
+form.style.display = "block";
+
 widget.style.display = "block";
+
 };
 
 closeBtn.onclick = () => {
+
 widget.style.display = "none";
+
 };
 
 form.addEventListener("submit", async (e)=>{
@@ -37,8 +44,17 @@ if(data.success){
 form.reset();
 
 form.style.display="none";
-
 success.style.display="block";
+
+/* auto close widget */
+
+setTimeout(()=>{
+
+success.style.display="none";
+form.style.display="block";
+widget.style.display="none";
+
+},3000);
 
 }
 
