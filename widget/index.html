@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<title>Support Widget</title>
 <link rel="stylesheet" href="widget.css">
+
 </head>
 
 <body>
 
-<button id="openWidget">Support</button>
+<h1 class="pageTitle">Support Portal</h1>
+<p class="pageDesc">If you need help, click the support button.</p>
 
+<!-- Floating Button -->
+<button id="openWidget">💬 Support</button>
+
+<!-- Widget Box -->
 <div id="widgetBox">
 
-<h3>Support Ticket</h3>
+<div class="widgetHeader">
+<span>Support Ticket</span>
+<button id="closeWidget">✕</button>
+</div>
 
 <form id="ticketForm">
 
-<input name="your-name" placeholder="Name" required>
+<input name="your-name" placeholder="Full Name" required>
 
 <input name="your-email" placeholder="Email" required>
 
@@ -26,11 +37,15 @@
 
 <input name="your-subject" placeholder="Subject">
 
-<textarea name="your-message" placeholder="Message"></textarea>
+<textarea name="your-message" placeholder="Describe your issue"></textarea>
 
-<button type="submit">Send</button>
+<button type="submit" id="submitBtn">Submit Ticket</button>
 
 </form>
+
+<div id="successMessage" style="display:none;">
+✅ Ticket submitted successfully!
+</div>
 
 </div>
 
