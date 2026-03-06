@@ -1,0 +1,29 @@
+#openWidget{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#007bff;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:25px;
+cursor:pointer;
+}
+
+#widgetBox{
+display:none;
+position:fixed;
+bottom:70px;
+right:20px;
+width:300px;
+background:white;
+border:1px solid #ccc;
+padding:20px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input,select,textarea{
+width:100%;
+margin-bottom:10px;
+padding:8px;
+}
