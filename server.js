@@ -12,6 +12,20 @@ app.use(express.json());
 
 const upload = multer({ dest: "uploads/" });
 
+/* ---------- Root Route ---------- */
+
+app.get("/", (req, res) => {
+  res.send("Ticket Widget API is running 🚀");
+});
+
+/* ---------- Health Check ---------- */
+
+app.get("/health", (req, res) => {
+  res.json({ status: "running" });
+});
+
+/* ---------- Create Ticket API ---------- */
+
 app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
   try {
@@ -83,7 +97,6 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
     console.log("=========================");
 
-    // FreeScout sometimes throws warnings even if ticket is created
     return res.status(200).json({
       success: true,
       message: "Ticket created but API returned warning"
@@ -92,6 +105,8 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
   }
 
 });
+
+/* ---------- Server ---------- */
 
 const PORT = process.env.PORT || 3000;
 
