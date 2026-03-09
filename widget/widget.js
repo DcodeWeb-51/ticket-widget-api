@@ -6,6 +6,8 @@ const form = document.getElementById("ticketForm");
 const success = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
 
+/* Open widget */
+
 openBtn.onclick = () => {
 
 success.style.display = "none";
@@ -15,11 +17,15 @@ widget.style.display = "block";
 
 };
 
+/* Close widget */
+
 closeBtn.onclick = () => {
 
 widget.style.display = "none";
 
 };
+
+/* Submit form */
 
 form.addEventListener("submit", async (e)=>{
 
@@ -44,9 +50,10 @@ if(data.success){
 form.reset();
 
 form.style.display="none";
+
 success.style.display="block";
 
-/* auto close widget */
+/* auto close widget after 3 seconds */
 
 setTimeout(()=>{
 
@@ -55,6 +62,10 @@ form.style.display="block";
 widget.style.display="none";
 
 },3000);
+
+}else{
+
+alert("Ticket creation failed");
 
 }
 
