@@ -10,31 +10,33 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* serve widget files */
+/* Serve widget files */
 app.use(express.static("widget"));
 
 const upload = multer({ dest: "uploads/" });
+
+/* Create Ticket API */
 
 app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
   try {
 
-    const {
-      "your-name": name,
-      "your-email": email,
-      "issue-type": issueType,
-      "course": course,
-      "your-subject": subject,
-      "your-message": message,
-      "file-link": fileLink
-    } = req.body;
+    const name = req.body["your-name"];
+    const email = req.body["your-email"];
+    const issueType = req.body["issue-type"];
+    const course = req.body["cf_course"];
+    const subject = req.body["your-subject"];
+    const message = req.body["your-message"];
+    const fileLink = req.body["file-link"];
+    const pageUrl = req.body["page-url"];
 
     const payload = {
+
       type: "email",
 
       mailboxId: Number(process.env.MAILBOX_ID),
 
-      subject: subject,
+      subject: subject || "Support Ticket",
 
       customer: {
         email: email,
@@ -44,15 +46,22 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
       threads: [
         {
           type: "customer",
-          text: message
-        }
-      ],
+          text: `
+Issue Type: ${issueType}
 
-      customFields: [
-        { name: "issue_type", value: issueType },
-        { name: "course", value: course },
-        { name: "file_link", value: fileLink }
+Course: ${course}
+
+Message:
+${message}
+
+File Link: ${fileLink || "N/A"}
+
+Page URL:
+${pageUrl}
+          `
+        }
       ]
+
     };
 
     const response = await axios.post(
@@ -73,11 +82,17 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
   } catch (error) {
 
-    console.log(error.response?.data || error.message);
+    console.log("FreeScout Error:");
+
+    if (error.response) {
+      console.log(error.response.data);
+    } else {
+      console.log(error.message);
+    }
 
     res.json({
-      success: true,
-      message: "Ticket created but API returned warning"
+      success: false,
+      message: "Ticket creation failed"
     });
 
   }
