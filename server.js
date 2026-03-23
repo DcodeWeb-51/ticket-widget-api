@@ -9,27 +9,46 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-/* Serve widget files */
+/* Serve widget + uploads */
 app.use(express.static("widget"));
+app.use("/uploads", express.static("uploads"));
 
-const upload = multer({ dest: "uploads/" });
+/* Multer storage config */
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  }
+});
 
-/* Create ticket API */
+const upload = multer({ storage });
+
+/* API */
 
 app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
   try {
 
-    const {
-      "your-name": name,
-      "your-email": email,
-      "issue-type": issueType,
-      "course": course,
-      "your-subject": subject,
-      "your-message": message,
-      "file-link": fileLink
-    } = req.body;
+    /* IMPORTANT: use multer-parsed body */
+    const body = req.body || {};
+
+    console.log("BODY:", body);
+    console.log("FILE:", req.file);
+
+    const name = body["your-name"];
+    const email = body["your-email"];
+    const issueType = body["issue-type"];
+    const course = body["course"];
+    const subject = body["your-subject"];
+    const message = body["your-message"];
+
+    const file = req.file;
+
+    const fileUrl = file
+      ? `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
+      : null;
 
     const payload = {
 
@@ -37,7 +56,7 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
       mailboxId: Number(process.env.MAILBOX_ID),
 
-      subject: subject,
+      subject: subject || "Support Ticket",
 
       customer: {
         email: email,
@@ -47,14 +66,20 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
       threads: [
         {
           type: "customer",
-          text: message
-        }
-      ],
+          text: `
+Name: ${name || "N/A"}
+Email: ${email || "N/A"}
 
-      customFields: [
-        { name: "issue_type", value: issueType },
-        { name: "course", value: course },
-        { name: "file_link", value: fileLink }
+Issue Type: ${issueType || "N/A"}
+Course: ${course || "N/A"}
+
+Message:
+${message || "No message provided"}
+
+Uploaded File:
+${fileUrl || "No file uploaded"}
+          `
+        }
       ]
 
     };
@@ -80,8 +105,8 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
     console.log(error.response?.data || error.message);
 
     res.json({
-      success: true,
-      message: "Ticket created but API returned warning"
+      success: false,
+      message: "Ticket creation failed"
     });
 
   }
