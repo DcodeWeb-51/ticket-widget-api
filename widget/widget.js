@@ -6,49 +6,60 @@ const form = document.getElementById("ticketForm");
 const success = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
 
+/* Open widget */
+
 openBtn.onclick = () => {
-widget.style.display = "block";
+  success.style.display = "none";
+  form.style.display = "block";
+
+  widget.style.display = "block";
 };
+
+/* Close widget */
 
 closeBtn.onclick = () => {
-widget.style.display = "none";
+  widget.style.display = "none";
 };
 
-form.addEventListener("submit", async (e)=>{
+/* Submit form */
 
-e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-submitBtn.innerText="Sending...";
-submitBtn.disabled=true;
+  submitBtn.innerText = "Sending...";
+  submitBtn.disabled = true;
 
-const formData = new FormData(form);
+  const formData = new FormData(form);
 
-try{
+  try {
+    const res = await fetch("/api/ticket", {
+      method: "POST",
+      body: formData,
+    });
 
-const res = await fetch("/api/ticket",{
-method:"POST",
-body:formData
-});
+    const data = await res.json();
 
-const data = await res.json();
+    if (data.success) {
+      form.reset();
 
-if(data.success){
+      form.style.display = "none";
 
-form.reset();
+      success.style.display = "block";
 
-form.style.display="none";
+      /* auto close widget after 3 seconds */
 
-success.style.display="block";
+      setTimeout(() => {
+        success.style.display = "none";
+        form.style.display = "block";
+        widget.style.display = "none";
+      }, 3000);
+    } else {
+      alert("Ticket creation failed");
+    }
+  } catch (err) {
+    alert("Server error");
+  }
 
-}
-
-}catch(err){
-
-alert("Server error");
-
-}
-
-submitBtn.innerText="Submit Ticket";
-submitBtn.disabled=false;
-
+  submitBtn.innerText = "Submit Ticket";
+  submitBtn.disabled = false;
 });

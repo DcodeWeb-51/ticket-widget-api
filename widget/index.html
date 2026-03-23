@@ -1,69 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Support Portal</title>
-<link rel="stylesheet" href="widget.css">
+    <title>Support Portal</title>
 
-</head>
+    <link rel="stylesheet" href="widget.css" />
+  </head>
 
-<body>
+  <body>
+    <h1 class="pageTitle">Support Portal</h1>
+    <p class="pageDesc">
+      Need help? Click the Support button in the bottom-right corner.
+    </p>
 
-<h1 class="pageTitle">Support Portal</h1>
-<p class="pageDesc">
-Need help? Click the Support button in the bottom-right corner.
-</p>
+    <!-- Floating support button -->
 
-<button id="openWidget">💬 Support</button>
+    <button id="openWidget">💬 Support</button>
 
-<div id="widgetBox">
+    <!-- Widget container -->
 
-<div class="widgetHeader">
-<span>Support Ticket</span>
-<button id="closeWidget">✕</button>
-</div>
+    <div id="widgetBox">
+      <div class="widgetHeader">
+        <span>Support Ticket</span>
 
-<form id="ticketForm">
+        <button id="closeWidget">✕</button>
+      </div>
 
-<input name="your-name" placeholder="Full Name" required>
+      <form id="ticketForm">
+        <input name="your-name" placeholder="Full Name" required />
 
-<input name="your-email" type="email" placeholder="Email" required>
+        <input name="your-email" type="email" placeholder="Email" required />
 
-<select name="issue-type" required>
-<option value="">Issue Type</option>
-<option value="Registration">Registration</option>
-<option value="Payment">Payment</option>
-<option value="Course Related">Course Related</option>
-<option value="Feedback">Feedback</option>
-<option value="Other">Other</option>
-</select>
+        <select name="issue-type" required>
+          <option value="">Issue Type</option>
 
-<select name="course" required>
-<option value="">Select Course</option>
-<option value="Brahmavidya Adhyayan">Brahmavidya Adhyayan</option>
-<option value="Diploma in Sanskrit Learning and Teaching">Diploma in Sanskrit Learning and Teaching</option>
-<option value="Diploma in the Srimad Bhagavad Gita">Diploma in the Srimad Bhagavad Gita</option>
-<option value="Satsang-Diksha Adhyayan">Satsang-Diksha Adhyayan</option>
-</select>
+          <option value="Registration">Registration</option>
 
-<input name="your-subject" placeholder="Subject">
+          <option value="Payment">Payment</option>
 
-<textarea name="your-message" placeholder="Describe your issue"></textarea>
+          <option value="Course Related">Course Related</option>
 
+          <option value="Feedback">Feedback</option>
 
-<input type="file" name="multiple-files" accept=".jpg,.jpeg,.png,.pdf">
+          <option value="Other">Other</option>
+        </select>
 
-<button type="submit" id="submitBtn">Submit Ticket</button>
+        <!-- IMPORTANT: FreeScout custom field -->
 
-</form>
+        <select name="cf_course" required>
+          <option value="">Select Course</option>
 
-<div id="successMessage">
-✅ Ticket submitted successfully!
-</div>
+          <option value="Brahmavidya Adhyayan">Brahmavidya Adhyayan</option>
 
-</div>
+          <option value="Diploma in Sanskrit Learning and Teaching">
+            Diploma in Sanskrit Learning and Teaching
+          </option>
 
-<script src="widget.js"></script>
+          <option value="Diploma in the Srimad Bhagavad Gita">
+            Diploma in the Srimad Bhagavad Gita
+          </option>
 
-</body>
+          <option value="Satsang-Diksha Adhyayan">
+            Satsang-Diksha Adhyayan
+          </option>
+        </select>
+
+        <input name="your-subject" placeholder="Subject" />
+
+        <textarea
+          name="your-message"
+          placeholder="Describe your issue"
+        ></textarea>
+
+        <input
+          type="file"
+          name="multiple-files"
+          accept=".jpg,.jpeg,.png,.pdf"
+        />
+
+        <button type="submit" id="submitBtn">Submit Ticket</button>
+      </form>
+
+      <div id="successMessage">✅ Ticket submitted successfully!</div>
+    </div>
+
+    <script src="widget.js"></script>
+  </body>
 </html>

@@ -3,6 +3,7 @@ font-family:Arial, Helvetica, sans-serif;
 text-align:center;
 padding-top:120px;
 background:#f5f7fb;
+margin:0;
 }
 
 .pageTitle{
@@ -15,7 +16,7 @@ color:#666;
 margin-bottom:40px;
 }
 
-/* Floating button */
+/* Floating Button */
 
 #openWidget{
 position:fixed;
@@ -24,10 +25,12 @@ right:25px;
 background:#007bff;
 color:white;
 border:none;
-padding:14px 20px;
+padding:14px 22px;
 border-radius:30px;
 cursor:pointer;
 box-shadow:0 6px 15px rgba(0,0,0,0.2);
+font-size:16px;
+z-index:999;
 }
 
 /* Widget */
@@ -37,11 +40,13 @@ display:none;
 position:fixed;
 bottom:80px;
 right:25px;
-width:320px;
+width:340px;
+max-width:95%;
 background:white;
 border-radius:10px;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
 overflow:hidden;
+z-index:999;
 }
 
 /* Header */
@@ -53,13 +58,14 @@ padding:12px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+font-size:16px;
 }
 
 #closeWidget{
 background:none;
 border:none;
 color:white;
-font-size:18px;
+font-size:20px;
 cursor:pointer;
 }
 
@@ -72,13 +78,14 @@ padding:15px;
 input,select,textarea{
 width:100%;
 margin-bottom:10px;
-padding:8px;
+padding:10px;
 border:1px solid #ddd;
 border-radius:5px;
+font-size:14px;
 }
 
 textarea{
-height:70px;
+height:80px;
 resize:none;
 }
 
@@ -87,9 +94,10 @@ width:100%;
 background:#007bff;
 color:white;
 border:none;
-padding:10px;
+padding:12px;
 border-radius:5px;
 cursor:pointer;
+font-size:15px;
 }
 
 /* Success message */
@@ -100,4 +108,55 @@ padding:25px;
 text-align:center;
 color:green;
 font-weight:bold;
+}
+
+/* ---------------- MOBILE ---------------- */
+
+@media (max-width:600px){
+
+.pageTitle{
+font-size:28px;
+padding:0 20px;
+}
+
+.pageDesc{
+padding:0 20px;
+}
+
+/* widget full width */
+
+#widgetBox{
+right:10px;
+left:10px;
+width:auto;
+bottom:80px;
+}
+
+/* button smaller */
+
+#openWidget{
+right:15px;
+bottom:20px;
+padding:12px 18px;
+font-size:14px;
+}
+
+}
+
+/* --------------- SMALL PHONES --------------- */
+
+@media (max-width:400px){
+
+#widgetBox{
+bottom:70px;
+}
+
+input,select,textarea{
+font-size:13px;
+}
+
+button[type="submit"]{
+font-size:14px;
+}
+
 }

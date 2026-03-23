@@ -20,17 +20,17 @@ const storage = multer.diskStorage({
   destination: "uploads/",
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
-  }
+  },
 });
 
 const upload = multer({ storage });
 
 /* API */
 
+/* Create Ticket API */
+
 app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
-
   try {
-
     /* IMPORTANT: use multer-parsed body */
     const body = req.body || {};
 
@@ -51,7 +51,6 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
       : null;
 
     const payload = {
-
       type: "email",
 
       mailboxId: Number(process.env.MAILBOX_ID),
@@ -60,7 +59,7 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
 
       customer: {
         email: email,
-        firstName: name
+        firstName: name,
       },
 
       threads: [
@@ -78,10 +77,9 @@ ${message || "No message provided"}
 
 Uploaded File:
 ${fileUrl || "No file uploaded"}
-          `
-        }
-      ]
-
+          `,
+        },
+      ],
     };
 
     const response = await axios.post(
@@ -90,27 +88,23 @@ ${fileUrl || "No file uploaded"}
       {
         headers: {
           "X-FreeScout-API-Key": process.env.FREESCOUT_API_KEY,
-          "Content-Type": "application/json"
-        }
-      }
+          "Content-Type": "application/json",
+        },
+      },
     );
 
     res.json({
       success: true,
-      conversationId: response.data.id
+      conversationId: response.data.id,
     });
-
   } catch (error) {
-
     console.log(error.response?.data || error.message);
 
     res.json({
       success: false,
-      message: "Ticket creation failed"
+      message: "Ticket creation failed",
     });
-
   }
-
 });
 
 const PORT = process.env.PORT || 3000;
