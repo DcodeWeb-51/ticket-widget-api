@@ -67,9 +67,11 @@ app.post("/api/ticket", upload.single("multiple-files"), async (req, res) => {
           type: "customer",
           text: `
 Name: ${name || "N/A"}
+
 Email: ${email || "N/A"}
 
 Issue Type: ${issueType || "N/A"}
+
 Course: ${course || "N/A"}
 
 Message:
